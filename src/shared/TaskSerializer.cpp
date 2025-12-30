@@ -1,4 +1,4 @@
-#include "serialization/TaskSerializer.h"
+#include "shared/TaskSerializer.h"
 
 std::string TaskSerializer::toJson(const Task& task) {
     json j = toJsonObject(task);

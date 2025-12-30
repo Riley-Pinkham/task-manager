@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = clang++
-CXXFLAGS = -std=c++17 -Iinclude -Iinclude/model -Iinclude/repository -Iinclude/service
+CXXFLAGS = -std=c++17 -Iinclude -Iinclude/model -Iinclude/repository -Iinclude/service -Iinclude/shared
 LDFLAGS = -lsqlite3
 
 # Directories
@@ -13,6 +13,9 @@ SOURCES = main.cpp \
           src/model/Column.cpp \
           src/repository/TaskRepository.cpp \
 		  src/service/TaskService.cpp \
+		  src/shared/TaskSerializer.cpp \
+		  src/shared/ColumnSerializer.cpp \
+		  src/shared/NetworkUtils.cpp
 
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)
