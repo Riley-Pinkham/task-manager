@@ -1,0 +1,35 @@
+# Executables
+main
+main2
+helloworld
+Network/src/client/client
+Network/src/server/server
+
+# Compiled Object files
+*.o
+*.obj
+
+# Debug files
+*.dSYM/
+
+# Libraries
+*.a
+*.so
+*.dylib
+*.lib
+*.dll
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Database (runtime)
+*.db
+*.sqlite
+
+# Build directories
+build/
+bin/
