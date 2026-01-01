@@ -1,26 +1,9 @@
 
 #include "CommandModels.h"
 
-
-
-CreateTaskCommand::CreateTaskCommand(){
-    
-}
-
-class CreateTaskCommand : public Command {
-public:
-    std::string title;
-    std::string description;
-    Task::Priority priority; // Using the Task model's enum
-    std::string assignee;
-    
-    CreateTaskCommand() : Command(CommandType::CREATE_TASK) {};
-};
-
-class GetTaskCommand : public Command {
-public:
-    int id;
-    
-    GetTaskCommand() : Command(CommandType::GET_TASK) {};
-};
-
+/**
+ * NOTE: this is a simple data structure (DTO i.e. Data Transfer Object)
+ * The .h file includes Inline constructors with initializer lists for the classes. 
+ * Currently not method implemenataions for any of these classes are needed,
+ * but if there is any need to this they can go into this .cpp file. 
+ */
