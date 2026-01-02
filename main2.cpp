@@ -121,7 +121,7 @@ int main()
 
     int* b; 
     std::cout << "an uninitilized pointer b has an address that some \"random\" address. the value is could be anything." << std::endl;
-    std::cout << "address of b: " << b << " Value of b: " << *b << std::endl; // if we try to assign this to somethign like '*b = 12' this could cause a segmentation fault. 
+    //std::cout << "address of b: " << b << " Value of b: " << *b << std::endl; // if we try to assign this to somethign like '*b = 12' this could cause a segmentation fault. 
 
     int* c = nullptr; 
 
@@ -221,6 +221,7 @@ int main()
      * 1. Cannot point to nothing. It must be initilized. 
      * 2. Uses the . operaotr 
      * 3. Cannot be reassigned to another object. Its bound to the origional "Address spot". It's the primary practical difference between references and pointers:
+     * 4. Pass by reference also doesnt copy the object. 
      */
 
     class A{
@@ -260,6 +261,52 @@ int main()
 
     std::cout << "myA->a: " << myA->a << std::endl; 
     std::cout << "No longer the same as it was before at someA " << someA.a << std::endl;
+
+    // Object Slicing? here's what you need to know
+
+    class baseClass{
+        protected:
+        char charA = 'A', charB = 'B';
+        public:
+        virtual void getStuff()
+        {
+            std::cout << charA << " " << charB << std::endl;
+        };
+    };
+
+    class derivedClass : public baseClass {
+        protected:
+        //I want ints too
+        int intA = 4, intB = 5;
+        public:
+        void getStuff() override {
+            std::cout << charA << " " << charB << "\n"
+            << intA << " " << intB << std::endl;
+        }
+    };
+
+    //Lets instantiate a derivedClass 
+
+    derivedClass myDerivedClass; 
+
+    //We can get our ints and our chars
+
+    std::cout << "We get chars and ints" << std::endl;
+    myDerivedClass.getStuff();
+
+    //now lets "Slice" our myDerivedClass
+
+    baseClass myBaseClass = myDerivedClass; // no longer have access to derived class ints
+
+    std::cout << "slicing occures" << std::endl; 
+    myBaseClass.getStuff();
+    // but if we use pointers...
+
+    baseClass* myBasePtr = &myDerivedClass; //Same with a pointer. 
+
+    std::cout << "Now we have a base ptr pointing to the address of derived class i.e. baseClass* myBasePtr = &myDerivedClass;" << std::endl;
+    std::cout << "call the myBasePtr on getStuff should get ints and chars." << std::endl;
+    myBasePtr->getStuff();
 
 
 

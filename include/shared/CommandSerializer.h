@@ -13,8 +13,8 @@ class CommandSerializer {
     // Methods need to be static so we can call them without a class instance. 
     // i.e. we dont need to create the objest like CommandSerializer someCMD; someCMD.toJson()...
     // we can just call CommandSerializer::toJson().... NOTE: may want to use an alais with this class
-    static std::string toJson(const Command* cmd);
-    static Command* fromJson(const std::string& json);
+    static std::string toJsonString(const Command& cmd);
+    static Command* fromJsonString(const std::string& json);
 
 
 
