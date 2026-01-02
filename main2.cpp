@@ -272,6 +272,7 @@ int main()
         {
             std::cout << charA << " " << charB << std::endl;
         };
+        virtual ~baseClass() = default;
     };
 
     class derivedClass : public baseClass {

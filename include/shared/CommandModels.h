@@ -21,7 +21,9 @@ class Command {
 protected:
     CommandType type;
     Command(CommandType type) : type(type) {};
+public:    
     virtual ~Command() = default; // Important for polymorphism
+    CommandType getType() const { return type; } 
 };
 
 class CreateTaskCommand : public Command {
@@ -47,13 +49,15 @@ public:
                       Task::Priority priority, std::string assignee) 
         : Command(CommandType::CREATE_TASK), title(title), 
           description(description), priority(priority), assignee(assignee) {}
+    ~CreateTaskCommand() = default; 
 };
 
 class GetTaskCommand : public Command {
 public:
     int id;
     
-    GetTaskCommand(int id) : id(id), Command(CommandType::GET_TASK) {};
+    GetTaskCommand(int id) : Command(CommandType::GET_TASK), id(id) {};
+    ~GetTaskCommand() = default; 
 };
 
 #endif // COMMAND_MODELS_H
