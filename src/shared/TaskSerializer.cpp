@@ -28,14 +28,7 @@ Task TaskSerializer::fromJsonObject(const json& j) {
     
     // Convert priority string to enum
     std::string priorityStr = j["priority"];
-    Task::Priority priority = Task::Priority::GREEN_LOW;
-    if (priorityStr == "YELLOW_MEDIUM") {
-        priority = Task::Priority::YELLOW_MEDIUM;
-    } else if (priorityStr == "ORANGE_HIGH") {
-        priority = Task::Priority::ORANGE_HIGH;
-    } else if (priorityStr == "RED_URGENT") {
-        priority = Task::Priority::RED_URGENT;
-    }
+    Task::Priority priority = Task::priorityFromString(priorityStr);
     
     return Task(taskID, title, description, priority, assignee);
 }

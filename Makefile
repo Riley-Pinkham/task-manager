@@ -16,7 +16,8 @@ SOURCES = main.cpp \
 		  src/shared/TaskSerializer.cpp \
 		  src/shared/ColumnSerializer.cpp \
 		  src/shared/NetworkUtils.cpp \
-		  src/shared/CommandModels.cpp
+		  src/shared/CommandModels.cpp \
+		  src/shared/CommandSerializer.cpp
 
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)

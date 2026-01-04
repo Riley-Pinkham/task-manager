@@ -19,24 +19,7 @@ json CommandSerializer::toJsonObject(const Command& cmd) {
     if(cmd.getType() == CommandType::CREATE_TASK){
         // Alais creation for the exact same memory location. Down casting to derived type(so I can access parameters.)
         const CreateTaskCommand& createTaskRef = static_cast<const CreateTaskCommand&>(cmd);
-        std::string priorityStr;
-        switch (createTaskRef.priority) {
-            case Task::Priority::GREEN_LOW:
-                priorityStr = "GREEN_LOW";
-                break; 
-            case Task::Priority::YELLOW_MEDIUM:
-                priorityStr = "YELLOW_MEDIUM";
-                break;
-            case Task::Priority::ORANGE_HIGH:
-                priorityStr = "ORANGE_HIGH";
-                break;
-            case Task::Priority::RED_URGENT:
-                priorityStr = "RED_URGENT";
-                break;
-            default:
-                priorityStr = "UNKNOWN";
-                break;
-    }
+        std::string priorityStr = Task::priorityToString(createTaskRef.priority);
         jsonObj["command"] = "CREATE_TASK";
         jsonObj["title"] = createTaskRef.title;
         jsonObj["description"] = createTaskRef.description;
@@ -64,14 +47,7 @@ Command* CommandSerializer::fromJsonObject(const json& jsonObj) {
 
     if(cmdStr == "CREATE_TASK"){
         std::string priorityStr = jsonObj["priority"].get<std::string>(); // use get<T>() to get string type not json type
-        Task::Priority priority = Task::Priority::GREEN_LOW;
-        if (priorityStr == "YELLOW_MEDIUM") {
-            priority = Task::Priority::YELLOW_MEDIUM;
-        } else if (priorityStr == "ORANGE_HIGH") {
-            priority = Task::Priority::ORANGE_HIGH;
-        } else if (priorityStr == "RED_URGENT") {
-            priority = Task::Priority::RED_URGENT;
-        }
+        Task::Priority priority = Task::priorityFromString(priorityStr);
         CreateTaskCommand* createCmdPtr = new CreateTaskCommand(
             jsonObj["title"].get<std::string>(), 
             jsonObj["description"].get<std::string>(), 

@@ -15,7 +15,7 @@ private:
     // Due date and timer can be implemented using std::chrono types This will be added in future updates
 
 public:
-    enum class Priority { GREEN_LOW, YELLOW_MEDIUM, ORANGE_HIGH, RED_URGENT } priority;
+    enum class Priority { GREEN_LOW, YELLOW_MEDIUM, ORANGE_HIGH, RED_URGENT, UNKNOWN } priority;
 
     Task(unsigned int taskID = 0, const std::string& title = "", const std::string& description = "", const Priority priority = Priority::GREEN_LOW, const std::string& assignee = "Unassigned")
         : taskID(taskID), title(title), description(description), priority(priority), assignee(assignee) {};
@@ -33,6 +33,11 @@ public:
     void setTitle(const std::string& title);
     void setDescription(const std::string& description);
     void setPriority(Priority priority);
+
+
+    //UTILITY FUNCTION. Remember to keep it static so we can use it without need to create an object to use it.
+    static std::string priorityToString(Priority priority);
+    static Priority priorityFromString(std::string priorityString);
 
     void printTask();
 

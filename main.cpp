@@ -11,6 +11,8 @@
 #include "ITaskRepository.h"
 #include "TaskRepository.h"
 #include "TaskService.h"
+#include "CommandModels.h"
+#include "CommandSerializer.h"
 
 
 std::string readSchemaFile(const std::string& filepath) {
@@ -55,12 +57,31 @@ int main(int argc, char* argv[]) {
     TaskService taskService(&taskRepo);// give the address of. Pass by pointer. we can do this because TaskService used the ITaskRepository. Implicitly converts: TaskRepository* → ITaskRepository*. This accepts any implementation of the ITaskRepository
 
     // 3. NOW I can use the service
-    taskService.createTask("Do Dishes", "Dont forget to dry and put away", Task::Priority::YELLOW_MEDIUM, "Riley");
+    taskService.createTask("Do Dishes please", "Dont forget to dry and put away please", Task::Priority::YELLOW_MEDIUM, "Riley isTheBest");
 
-    Task someTask = taskService.getTask(5);
+    Task someTask = taskService.getTask(6);
 
     someTask.printTask();
 
+
+    const GetTaskCommand myGTC(42);
+
+    const CreateTaskCommand myCTC("My Title", "My Description", Task::Priority::RED_URGENT, "Riley Pinkham");
+
+
+   //std::cout << CommandSerializer::toJsonString(myCTC) << std::endl;
+
+   std::string jsonString = "{\"assignee\": \"Riley Pinkham\",\"command\": \"CREATE_TASK\",\"description\": \"My Description\",\"priority\": \"RED_URGENT\",\"title\": \"My Title\"}";
+
+   Command* cmd = CommandSerializer::fromJsonString(jsonString);
+
+   if(cmd->getType() == CommandType::CREATE_TASK)
+   {
+        CreateTaskCommand* myCTCptr = static_cast<CreateTaskCommand*>(cmd);
+        std::cout << "title: " << myCTCptr->title << " description: " << myCTCptr->description << " priority: " << Task::priorityToString(myCTCptr->priority) << " assignee: " << myCTCptr->assignee << std::endl;
+   }
+
+   delete cmd;
 
     sqlite3_close(db);
 

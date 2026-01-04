@@ -26,6 +26,13 @@ public:
     CommandType getType() const { return type; } 
 };
 
+/**
+ * 
+ * @param title
+ * @param description
+ * @param priority
+ * @param assignee
+ */
 class CreateTaskCommand : public Command {
 public:
     std::string title;
