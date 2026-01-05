@@ -21,6 +21,42 @@ void bar()
     std::cout << "bar called. sleeped for 20sec" << std::endl;
 
 }
+class Obj {
+    public:
+        int a = 5;
+
+};
+
+// pass by reference
+void fun1(const Obj& a, Obj& b){
+    //Cant chang a
+    // a.a = 15; // expression must be a modifiable lvalue. A is const so It cannot be modified..
+    b.a = 20; // We can see a problem here if Obj a and Obj b refer to the same object. It will get changed. 
+    //Can chang b
+};
+
+// pass by reference and value
+void fun2(const Obj& a, Obj b){
+    //Cant chang a
+    // a.a = 15; // expression must be a modifiable lvalue. A is const so It cannot be modified..
+    b.a = 30; // We can see a problem here if Obj a and Obj b refer to the same object. It will get changed. 
+    //Can chang b
+};
+
+// pass by reference but check that objects are not the same. 
+void fun3(const Obj& a, Obj& b){
+    if(&a == &b){
+        std::cout << "Object a dna Object b refer to the same object." << std::endl;
+    } else {
+        std::cout << "Let's change the value of Obj 2 to be the same as Obj 1!" << std::endl;
+        std::cout << "Value of object 1: " << a.a << std::endl;
+        std::cout << "Value of object 2: " << b.a << std::endl;
+        std::cout << "...Changing Value of Object 2..." << std::endl;
+        b.a = a.a; 
+        std::cout << "New Value of Object 2: " << b.a << std::endl;
+    }
+};
+
 
 int main()
 {
@@ -309,6 +345,35 @@ int main()
     std::cout << "call the myBasePtr on getStuff should get ints and chars." << std::endl;
     myBasePtr->getStuff();
 
+    Obj myObj; 
+    Obj& myObjRef = myObj;
+
+    std::cout << "myObj holds an int value of 5. Value: " << myObj.a << ", but when we call fun1(const Obj& a, Obj& b) we see that if they refer to the same Obj it can be changed" << std::endl;
+    std::cout << "While the first parameter is const and the second is not if they reference the same Obj we should't chagne b" << std::endl;
+
+    std::cout << "...Calling fun1(myObj, myObjRef)..." << std::endl;
+
+    fun1(myObj, myObjRef);
+
+    std::cout << "Checking value of myObj again. Value: " << myObj.a << std::endl;
+
+    std::cout << "Value now evaluates to 20.... Let's keep that 20 and call fun2." << std::endl;
+    std::cout << "fun2 uses a const Obj& a, and a Obj b. Pass by value NOT reference. If it's truly a local copy after \n function runs it should still be 20 NOT 30" << std::endl;
+
+    std::cout << "...Calling fun2(myObj, myObjRef)..." << std::endl;
+
+    fun2(myObj, myObjRef);
+
+    std::cout << "Checking value of myObj again. Value: " << myObj.a << std::endl;
+
+    std::cout << "Let's use fun3" << std::endl;
+
+    fun3(myObj, myObjRef);
+
+    std::cout << "Now with different Objs" << std::endl; 
+    Obj newObj; 
+
+    fun3(newObj, myObj);
 
 
     return 0;
