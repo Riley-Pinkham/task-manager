@@ -2,7 +2,7 @@
 #include <string>
 #include <chrono>
 #include <thread>
-
+#include <memory>
 
 void foo()
 {
@@ -374,6 +374,31 @@ int main()
     Obj newObj; 
 
     fun3(newObj, myObj);
+
+    // l-values and r-values
+
+    int lvalue = 10; // lvalue is an l-value. 10 is an r-value. you cannot 10 = lvalue..
+
+    int& refLvalue = lvalue; // refLvalue is a reference to an l-value. 
+
+    // int& someRef = 10; // You cannot reference an r-value unless you use '&&' i.e. an r-value reference.
+
+    int&& refRvalue = 10; // refRvalue is a reference to an r-value
+
+
+    // Smart Pointers
+    // Pointer declaration and initialization. 
+    std::unique_ptr<int> myPtr1(new int(10));
+    std::cout << *myPtr1 << std::endl;
+    
+    // Transfer ownership to pointer ptr2, 
+    std::unique_ptr<int> myPtr2 = std::move(myPtr1);
+    std::cout << *myPtr2 << std::endl;
+    
+    std::cout << "pointer 1 should now be nullptr" << std::endl;
+    if(myPtr1 == nullptr){
+        std::cout << "nullptr" << std::endl;
+    }
 
 
     return 0;
