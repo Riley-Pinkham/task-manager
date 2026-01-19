@@ -40,7 +40,14 @@ json CommandSerializer::toJsonObject(const Command& cmd) {
     return jsonObj;
 }
 
-// delete ptr after command object is used
+/**
+ *  
+ * NOTE: DELETE POINTER after command object is used. 
+ * I understand the risk of not using somethign like a smart pointer. 
+ * i.e. std::unique_ptr<Command>
+ * I've intentionally done this do demonstrate use of the pointer. 
+ * I am aware that if an exception is thrown memory will be leaked.  
+ */
 Command* CommandSerializer::fromJsonObject(const json& jsonObj) {
 
     std::string cmdStr = jsonObj.at("command");

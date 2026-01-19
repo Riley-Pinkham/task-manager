@@ -400,6 +400,22 @@ int main()
         std::cout << "nullptr" << std::endl;
     }
 
+    std::vector<int> myVec = {10, 20, 30, 40, 50};
+
+    for(int i : myVec){
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+
+    myVec.erase(std::remove(myVec.begin(), myVec.end(), 30), myVec.end());
+
+
+    for(int i : myVec){
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
+    
+
 
     return 0;
 }
