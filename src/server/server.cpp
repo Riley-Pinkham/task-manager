@@ -148,6 +148,7 @@ int main (int argc, char* argv[]){
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(8080);
 
+    // Might need to fix "Address already in use" error if server crashes and we need to restart right away. 
     // Bind
     if (bind(socketfd, (struct sockaddr *)&address, sizeof(address)) < 0) {
         perror("bind failed");

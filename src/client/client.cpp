@@ -10,6 +10,10 @@
 #include <iostream>
 
 #include "NetworkUtils.h"
+#include "CommandModels.h"
+#include "CommandSerializer.h"
+#include "Task.h"
+
 
 
 
@@ -43,7 +47,7 @@ int main (int argc, char* argv[]){
     serv_addr.sin_port = htons(8080);
 
     // Convert IPv4 and IPv6 addresses from text to binary
-    if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, "10.0.0.153", &serv_addr.sin_addr) <= 0) {
         std::cerr << "Invalid address/ Address not supported" << std::endl;
         return -1;
     }
@@ -59,8 +63,13 @@ int main (int argc, char* argv[]){
     // send(socketfd, hello, strlen(hello), 0);
 
     //use new send_all function
-    const char* json_string = "{\"item1\": \"value1\",\"item2\": \"value2\",\"item3\": \"value3\"}";
-    NetworkUtils::send_framed_json(socketfd, json_string);
+
+
+    CreateTaskCommand ctcmd("Clean Room", "Pick up the toys you slob", Task::Priority::RED_URGENT, "Riley Pinkham");
+
+    std::string cmdString = CommandSerializer::toJsonString(ctcmd);
+
+    NetworkUtils::send_framed_json(socketfd, cmdString.c_str());
     std::cout << "Message sent" << std::endl;
 
     // Close socket
