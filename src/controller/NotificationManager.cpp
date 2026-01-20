@@ -42,6 +42,7 @@ void NotificationManager::broadcast(const nlohmann::json& message){
         currentSubscribers = subscriberList;
     }
 
+    //DONT HOLD THE LOCK WHILE CALLING SEND YOU WILL DEADLOCK
     for (int subscriber : currentSubscribers ){
             send(subscriber, messageString);
         

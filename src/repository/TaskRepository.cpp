@@ -12,6 +12,7 @@ TaskRepository::~TaskRepository()
 }
 
 bool TaskRepository::createTask(const Task& newTask) {
+    std::lock_guard<std::mutex> lock(databaseMutex);
     std::string sql = "INSERT INTO Task (title, description, priority, assignee) VALUES ('" +
                       newTask.getTitle() + "', '" +
                       newTask.getDescription() + "', '" +
@@ -69,7 +70,7 @@ static int callback(void* data, int i, char** argc, char** argCol){
 }
 
 Task TaskRepository::readTask(unsigned int taskID) {
-
+    std::lock_guard<std::mutex> lock(databaseMutex);
     const char* data = "Some Sort Of Data";
 
     Task gottenTask; // Stack Object

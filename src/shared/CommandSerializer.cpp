@@ -48,6 +48,7 @@ json CommandSerializer::toJsonObject(const Command& cmd) {
  * I've intentionally done this do demonstrate use of the pointer. 
  * I am aware that if an exception is thrown memory will be leaked.  
  */
+// UPDATE: We will want to update this to use std::unique_ptr<Command>
 Command* CommandSerializer::fromJsonObject(const json& jsonObj) {
 
     std::string cmdStr = jsonObj.at("command");

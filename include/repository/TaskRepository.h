@@ -7,7 +7,7 @@
 class TaskRepository : public ITaskRepository
 {
 private:
-    /* data */
+    mutable std::mutex databaseMutex;
 public:
     TaskRepository();
     ~TaskRepository();      
